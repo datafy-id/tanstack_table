@@ -1,80 +1,11 @@
-import { StrictMode, lazy } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import {
-  Link,
-  Outlet,
-  RouterProvider,
-  createRootRoute,
-  createRoute,
-  createRouter,
-} from "@tanstack/react-router";
+import { RouterProvider } from "@tanstack/react-router";
 
 import "./index.css";
 // import App from "./App.tsx";
 
-// import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-const TanStackRouterDevtools = import.meta.env.PROD
-  ? () => null // Render nothing in production
-  : lazy(() =>
-      // Lazy load in development
-      import("@tanstack/router-devtools").then((res) => ({
-        default: res.TanStackRouterDevtools,
-        // For Embedded Mode
-        // default: res.TanStackRouterDevtoolsPanel
-      }))
-    );
-
-const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>{" "}
-        <Link to="/about" className="[&.active]:font-bold">
-          About
-        </Link>
-      </div>
-      <hr />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
-});
-
-const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: function Index() {
-    return (
-      <div className="p-2">
-        <h3>Welcome home!</h3>
-      </div>
-    );
-  },
-});
-
-const aboutRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/about",
-  component: function Index() {
-    return (
-      <div className="p-2">
-        <h3>This is about page!</h3>
-      </div>
-    );
-  },
-});
-
-const routeTree = rootRoute.addChildren([indexRoute, aboutRoute]);
-
-const router = createRouter({ routeTree });
-
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
-}
+import { router } from "./router";
 
 const rootElement = document.getElementById("app")!;
 if (!rootElement.innerHTML) {
