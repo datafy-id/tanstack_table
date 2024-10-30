@@ -9,6 +9,7 @@ import { lazy } from "react";
 
 import { indexRoute } from "./pages/index";
 import { aboutRoute } from "./pages/about";
+import { TableBasic } from "./pages/table-basic";
 import { HeaderGroup01, HeaderGroup02 } from "./pages/table-header-grouping";
 
 // import { TanStackRouterDevtools } from "@tanstack/router-devtools";
@@ -30,6 +31,7 @@ export const rootRoute = createRootRoute({
         {[
           ["Home", "/"],
           ["About", "/about"],
+          ["Table Basic", "/table-basic"],
           ["Header Group 01", "/header-group-01"],
           ["Header Group 02", "/header-group-02"],
         ].map(([name, path]) => (
@@ -57,9 +59,16 @@ const headerGroup02Route = createRoute({
   component: HeaderGroup02,
 });
 
+const tableBasicRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/table-basic",
+  component: TableBasic,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   aboutRoute,
+  tableBasicRoute,
   headerGroup01Route,
   headerGroup02Route,
 ]);
