@@ -4,6 +4,7 @@ import {
   createRouter,
   Link,
   Outlet,
+  useParams,
 } from "@tanstack/react-router";
 import { lazy } from "react";
 
@@ -11,6 +12,7 @@ import { indexRoute } from "./pages/index";
 import { aboutRoute } from "./pages/about";
 import { TableBasic } from "./pages/table-basic";
 import { HeaderGroup01, HeaderGroup02 } from "./pages/table-header-grouping";
+import { ColumnFilter } from "./pages/table-column-filter";
 
 // import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 const TanStackRouterDevtools = import.meta.env.PROD
@@ -31,9 +33,10 @@ export const rootRoute = createRootRoute({
         {[
           ["Home", "/"],
           ["About", "/about"],
-          ["Table Basic", "/table-basic"],
-          ["Header Group 01", "/header-group-01"],
-          ["Header Group 02", "/header-group-02"],
+          ["Table Basic", "/table/basic"],
+          ["Header Group 01", "/table/header-group-01"],
+          ["Header Group 02", "/table/header-group-02"],
+          ["Colum Filter", "/table/column-filter"],
         ].map(([name, path]) => (
           <Link key={path} to={path} className="[&.active]:font-bold">
             {name}
@@ -47,31 +50,27 @@ export const rootRoute = createRootRoute({
   ),
 });
 
-const headerGroup01Route = createRoute({
+const tableRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/header-group-01",
-  component: HeaderGroup01,
+  path: "/table/$path",
+  component: () => {
+    const { path } = useParams({ strict: false });
+    switch (path) {
+      case "basic":
+        return <TableBasic />;
+      case "header-group-01":
+        return <HeaderGroup01 />;
+      case "header-group-02":
+        return <HeaderGroup02 />;
+      case "column-filter":
+        return <ColumnFilter />;
+      default:
+        return <TableBasic />;
+    }
+  },
 });
 
-const headerGroup02Route = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/header-group-02",
-  component: HeaderGroup02,
-});
-
-const tableBasicRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/table-basic",
-  component: TableBasic,
-});
-
-const routeTree = rootRoute.addChildren([
-  indexRoute,
-  aboutRoute,
-  tableBasicRoute,
-  headerGroup01Route,
-  headerGroup02Route,
-]);
+const routeTree = rootRoute.addChildren([indexRoute, aboutRoute, tableRoute]);
 
 export const router = createRouter({ routeTree });
 
