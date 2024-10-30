@@ -5,8 +5,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { makeData } from "./makeData";
-import { useEffect, useRef } from "react";
+import { type Person, makeData } from "./makeData";
+import { useRef } from "react";
 
 declare module "@tanstack/react-table" {
   // @ts-expect-error
@@ -14,50 +14,6 @@ declare module "@tanstack/react-table" {
     rowSpan?: number;
   }
 }
-
-type Person = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  visits: number;
-  status: string;
-  progress: number;
-};
-
-const allPerson: Person[] = [
-  {
-    firstName: "ridho",
-    lastName: "ridho",
-    age: 44,
-    visits: 0,
-    status: "In Relationship",
-    progress: 0,
-  },
-  {
-    firstName: "tanner",
-    lastName: "linsley",
-    age: 24,
-    visits: 100,
-    status: "In Relationship",
-    progress: 50,
-  },
-  {
-    firstName: "tandy",
-    lastName: "miller",
-    age: 40,
-    visits: 40,
-    status: "Single",
-    progress: 80,
-  },
-  {
-    firstName: "joe",
-    lastName: "dirte",
-    age: 45,
-    visits: 20,
-    status: "Complicated",
-    progress: 10,
-  },
-];
 
 const columnHelper = createColumnHelper<Person>();
 
