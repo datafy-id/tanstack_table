@@ -5,6 +5,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { makeData } from "./makeData";
+import { useEffect, useRef } from "react";
+
 declare module "@tanstack/react-table" {
   // @ts-expect-error
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -124,9 +127,11 @@ const columns = [
 ];
 
 export default function App() {
+  const allPerson = useRef<Person[]>(makeData(100));
+
   const table = useReactTable({
     columns: columns,
-    data: allPerson,
+    data: allPerson.current,
     getCoreRowModel: getCoreRowModel(),
     // debugAll: true,
   });
@@ -139,7 +144,7 @@ export default function App() {
       <h3 className="text-xl">Without rowSpan</h3>
 
       {/* WITHOUT ROWSPAN */}
-      <div className="p-2">
+      {/* <div className="p-2">
         <table className="*:border *:border-red-500">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -185,7 +190,7 @@ export default function App() {
             ))}
           </tfoot>
         </table>
-      </div>
+      </div> */}
 
       <h3 className="text-xl">With rowSpan</h3>
 
@@ -249,9 +254,9 @@ export default function App() {
         </table>
       </div>
 
-      <code className="text-sm">
-        <pre>{JSON.stringify(table.getState(), null, 4)}</pre>
-      </code>
+      {/* <code className="text-sm">
+        <pre>{JSON.stringify(makeData(3, 3), null, 2)}</pre>
+      </code> */}
     </div>
   );
 }
