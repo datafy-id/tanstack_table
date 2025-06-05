@@ -156,28 +156,28 @@ export const ColumnFilter = () => {
       </table>
       <div className="flex items-center gap-2">
         <button
-          className="border rounded p-1"
+          className="border rounded-sm p-1"
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
           {"<<"}
         </button>
         <button
-          className="border rounded p-1"
+          className="border rounded-sm p-1"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
           {"<"}
         </button>
         <button
-          className="border rounded p-1"
+          className="border rounded-sm p-1"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
           {">"}
         </button>
         <button
-          className="border rounded p-1"
+          className="border rounded-sm p-1"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
@@ -201,7 +201,7 @@ export const ColumnFilter = () => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               table.setPageIndex(page);
             }}
-            className="border p-1 rounded w-16"
+            className="border p-1 rounded-sm w-16"
           />
         </span>
         <select
@@ -253,7 +253,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
             column.setFilterValue((old: [number, number]) => [value, old?.[1]])
           }
           placeholder={`Min`}
-          className="w-24 border shadow rounded"
+          className="w-24 border shadow-sm rounded-sm"
         />
         <DebouncedInput
           type="number"
@@ -262,7 +262,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
             column.setFilterValue((old: [number, number]) => [old?.[0], value])
           }
           placeholder={`Max`}
-          className="w-24 border shadow rounded"
+          className="w-24 border shadow-sm rounded-sm"
         />
       </div>
       <div className="h-1" />
@@ -280,7 +280,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
     </select>
   ) : (
     <DebouncedInput
-      className="w-36 border shadow rounded"
+      className="w-36 border shadow-sm rounded-sm"
       onChange={(value) => column.setFilterValue(value)}
       placeholder={`Search...`}
       type="text"
